@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intern Task 2 - Web Development</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #fff8f0;
+      color: #2c3e50;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-section, .todo-section {
+      background: #fff0f5;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-bottom: 1rem;
+      color: #d63384;
+    }
+    form input, form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 2px solid #ffd6e0;
+      border-radius: 8px;
+    }
+    form button {
+      background: #ee0979;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #ff6a00;
+    }
+    .todo-section button {
+      background: #ee0979;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .todo-section button:hover {
+      background: #ff6a00;
+    }
+    .todo-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+    .todo-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background: #ffe6f0;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    .todo-item button {
+      background: #c82333;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Intern Task 2</h1>
+    <nav>
+      <a href="#form">Contact Form</a>
+      <a href="#todo">To-Do List</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="form-section" id="form">
+      <h2>Contact Form</h2>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <input type="text" id="message" placeholder="Your Message" required />
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+
+    <div class="todo-section" id="todo">
+      <h2>To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Enter a new task" />
+      <button onclick="addTask()">Add Task</button>
+      <ul class="todo-list" id="taskList"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!name || !email || !message) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      alert('Message sent successfully!');
+      this.reset();
+    });
+
+    // To-Do List
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const taskList = document.getElementById('taskList');
+      const taskText = taskInput.value.trim();
+
+      if (!taskText) {
+        alert('Please enter a task.');
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.className = 'todo-item';
+      li.innerHTML = `${taskText} <button onclick="this.parentElement.remove()">Remove</button>`;
+      taskList.appendChild(li);
+      taskInput.value = '';
+    }
+  </script>
+</body>
+</html>
